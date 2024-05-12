@@ -42,39 +42,67 @@ public class Main {
             }
         }
 
-        String str = "amir";
-        String output = "";
-        for (int m = 0; m < str.length(); m++) {
-            char ch = str.charAt(m);
-            int charnum = ch;
-            char newchar = (char) (122 - (charnum - 97));
-            output += newchar;
-        }
-        System.out.println(output);
 
+        for (int i = 0; i < n; i++){
+            for (int j = 0; j < n; j++){
+            System.out.print(objectsMatrix[i][j].i);
+            System.out.print(objectsMatrix[i][j].j);
+            }
+            System.out.println();
+        }
+
+        String inp = scn.nextLine();
+        String[][] result = handler(objectsMatrix, objectsMatrix[0][0], inp, 0, 0);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print(result[i][j]);
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
 
     }
 
-    public static String handler(Node[][] objectsMatrix, Node obj, String str){
+    public static String[][] handler(Node[][] objectsMatrix, Node obj, String str, int i, int j){
         String newstr;
+        int Matrixlen = objectsMatrix[0].length;
+        String[][] newstrMatrix = new String[Matrixlen][Matrixlen];
+        for (int k = 0; k < Matrixlen; k++){
+            for (int l = 0; l < Matrixlen; l++){
+                if (objectsMatrix[k][l].color == "pink"){
+                    newstrMatrix[k][l] = "";
+                }
+            }
+        }
         switch (obj.color){
             case "green":
                 newstr = obj.black(str, obj.num);
-                handler(objectsMatrix, objectsMatrix[obj.i][obj.j + 1], newstr);
-                handler(objectsMatrix, objectsMatrix[obj.i + 1][obj.j], newstr);
+                newstrMatrix[obj.i][obj.j] = newstr;
+                handler(objectsMatrix, objectsMatrix[obj.i][obj.j + 1], newstr, obj.i, obj.j);
+                handler(objectsMatrix, objectsMatrix[obj.i + 1][obj.j], newstr, obj.i, obj.j);
                 break;
             case "yellow":
                 newstr = obj.black(str, obj.num);
+                newstrMatrix[obj.i][obj.j] = newstr;
                 if (obj.i == 0){
-                    handler(objectsMatrix, objectsMatrix[obj.i][obj.j + 1], newstr);
+                    handler(objectsMatrix, objectsMatrix[obj.i + 1][obj.j], newstr, obj.i, obj.j);
                 }
                 else
-                    handler(objectsMatrix, objectsMatrix[obj.i + 1][obj.j], newstr);
+                    handler(objectsMatrix, objectsMatrix[obj.i][obj.j + 1], newstr, obj.i, obj.j);
                 break;
             case "blue":
+                newstr = obj.black(str, obj.num);
+                newstrMatrix[obj.i][obj.j] = newstr;
+                if (i == obj.i){
+                    handler(objectsMatrix, objectsMatrix[obj.i + 1][obj.j], newstr, obj.i, obj.j);
+                }
+                else
+                    handler(objectsMatrix, objectsMatrix[obj.i][obj.j + 1], newstr, obj.i, obj.j);
                 break;
             case "pink":
+
                 break;
         }
+        return newstrMatrix;
     }
 }
