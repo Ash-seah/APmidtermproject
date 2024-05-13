@@ -6,12 +6,21 @@ public class Main {
 
         Scanner scn = new Scanner(System.in);
         int n = scn.nextInt();
+        String inp = scn.next();
         int[][] randomMatrix = new int[n][n];
         Random r = new Random();
+//
+//        for (int i = 0; i < n; i++){
+//            for (int j = 0; j < n; j++){
+//                randomMatrix[i][j] = r.nextInt(1,6);
+//            }
+//        }
+//        int[][] randomMatrix = new int[8][8];
+//        randomMatrix = [[2, 5, 5, 4, 2, 1, 5, 5 ], [2, 1, 2, 4, 4, 1, 5, 4 ], [4, 4, 1, 1 ,1, 5, 1, 4], [4, 1, 4, 4 ,1, 4, 5, 1 ], [1, 1, 1, 5, 1, 4, 4, 5 ], [4, 4 ,5, 4, 5, 1, 5, 5], [1, 4, 4, 4, 1, 1, 1, 4], [4, 5, 4, 5, 5, 1, 4, 4 ]];
 
-        for (int i = 0; i < n; i++){
-            for (int j = 0; j < n; j++){
-                randomMatrix[i][j] = r.nextInt(1,6);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                randomMatrix[i][j] = scn.nextInt();
             }
         }
 
@@ -43,25 +52,29 @@ public class Main {
         }
 
 
-        for (int i = 0; i < n; i++){
-            for (int j = 0; j < n; j++){
-            System.out.print(objectsMatrix[i][j].i);
-            System.out.print(objectsMatrix[i][j].j);
-            }
-            System.out.println();
-        }
+//        for (int i = 0; i < n; i++){
+//            for (int j = 0; j < n; j++){
+//            System.out.print(objectsMatrix[i][j].i);
+//            System.out.print(objectsMatrix[i][j].j);
+//            }
+//            System.out.println();
+//        }
 
-        String inp = scn.nextLine();
         objectsMatrix[0][0].result = objectsMatrix[0][0].black(inp, objectsMatrix[0][0].num);
 
         calculate(objectsMatrix, n);
 
+        String str1 = objectsMatrix[n-2][n-2].result;
+
         Node[][] transpose = new Node[n][n];
         transpose(transpose, objectsMatrix, n);
+        objectsMatrix = transpose;
 
-        calculate(transpose, n);
+        calculate(objectsMatrix, n);
 
-        String ans = objectsMatrix[n-1][n-1].white(objectsMatrix[n-2][n-1].result, objectsMatrix[n-1][n-2].result, objectsMatrix[n-1][n-1].num);
+        String str2 = objectsMatrix[n-2][n-2].result;
+
+        String ans = objectsMatrix[n-1][n-1].white(str1, str2, objectsMatrix[n-1][n-1].num);
 
         System.out.print(ans);
     }
@@ -80,18 +93,19 @@ public class Main {
                 } else {
                     objectsMatrix[i][j].result = objectsMatrix[i][j].black(objectsMatrix[i - 1][j].result, objectsMatrix[i][j].num);
                 }
-                System.out.print(i);
-                System.out.print(j);
-                System.out.println(objectsMatrix[i][j].result);
+//                System.out.print(i);
+//                System.out.print(j);
+//                System.out.println(objectsMatrix[i][j].result);
             }
         }
     }
-    public static void transpose(Node[][] transpose, Node[][] objectsMatrix, int n){
+    public static Node[][] transpose(Node[][] transpose, Node[][] objectsMatrix, int n){
         for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
                 transpose[i][j]=objectsMatrix[j][i];
             }
         }
+        return transpose;
     }
 
     public static String[][] handler(Node[][] objectsMatrix, Node obj, String str, int i, int j){

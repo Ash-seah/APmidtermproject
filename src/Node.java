@@ -69,43 +69,40 @@ public class Node {
         return result.toString();
     }
 
-    public static String black(String str1, int num){
+    public static String black(String str, int num){
         String output = "";
         StringBuilder result = new StringBuilder();
         switch (num){
             case 1:
-                result.append(new StringBuilder(str1).reverse());
+                for (int m = 0; m < str.length(); m++)
+                {
+                    char ch = str.charAt(m);
+                    output += ch;
+                }
                 break;
             case 2:
-                for (char ch : str1.toCharArray()) {
-                    result.append(ch).append(ch);
+                for (int m = 0; m < str.length(); m++) {
+                    output += str.charAt(m);
+                    output += str.charAt(m);
                 }
                 break;
             case 3:
-                result.append(str1).append(str1);
+                output += str;
+                output += str;
                 break;
             case 4:
-                if (str1.length() > 1) {
-                    result.append(str1.substring(1)).append(str1.charAt(0));
-                }
-                else {
-                    result.append(str1);
-                }
+                output += str.charAt(str.length() - 1);
+                output += str.substring(0, str.length() - 1);
                 break;
             case 5:
-                for (char ch : str1.toCharArray()) {
-                    if (Character.isLowerCase(ch)) {
-                        result.append((char) ('z' - (ch - 'a')));
-                    }
-                    else if (Character.isUpperCase(ch)) {
-                        result.append((char) ('Z' - (ch - 'A')));
-                    }
-                    else {
-                        result.append(ch);
-                    }
+                for (int m = 0; m < str.length(); m++) {
+                    char ch = str.charAt(m);
+                    int charnum = ch;
+                    char newchar = (char) (122 - (charnum - 97));
+                    output += newchar;
                 }
                 break;
         }
-        return result.toString();
+        return output;
     }
 }
