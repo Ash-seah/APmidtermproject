@@ -52,15 +52,46 @@ public class Main {
         }
 
         String inp = scn.nextLine();
-        String[][] result = handler(objectsMatrix, objectsMatrix[0][0], inp, 0, 0);
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                System.out.print(result[i][j]);
-                System.out.print(" ");
-            }
-            System.out.println();
-        }
+        objectsMatrix[0][0].result = objectsMatrix[0][0].black(inp, objectsMatrix[0][0].num);
 
+        calculate(objectsMatrix, n);
+
+        Node[][] transpose = new Node[n][n];
+        transpose(transpose, objectsMatrix, n);
+
+        calculate(transpose, n);
+
+        String ans = objectsMatrix[n-1][n-1].white(objectsMatrix[n-2][n-1].result, objectsMatrix[n-1][n-2].result, objectsMatrix[n-1][n-1].num);
+
+        System.out.print(ans);
+    }
+
+    public static void calculate(Node[][] objectsMatrix, int n){
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - 1; j++) {
+                if (i == 0 && j == 0){
+                    continue;
+                }
+                if ((j == n - 1 || i == n - 1) && (i != 0 && j != 0)){
+                    objectsMatrix[i][j].result = objectsMatrix[i][j].white(objectsMatrix[i - 1][j].result, objectsMatrix[i][j - 1].result, objectsMatrix[i][j].num);
+                }
+                else if (i == 0){
+                    objectsMatrix[i][j].result = objectsMatrix[i][j].black(objectsMatrix[i][j - 1].result, objectsMatrix[i][j].num);
+                } else {
+                    objectsMatrix[i][j].result = objectsMatrix[i][j].black(objectsMatrix[i - 1][j].result, objectsMatrix[i][j].num);
+                }
+                System.out.print(i);
+                System.out.print(j);
+                System.out.println(objectsMatrix[i][j].result);
+            }
+        }
+    }
+    public static void transpose(Node[][] transpose, Node[][] objectsMatrix, int n){
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                transpose[i][j]=objectsMatrix[j][i];
+            }
+        }
     }
 
     public static String[][] handler(Node[][] objectsMatrix, Node obj, String str, int i, int j){
