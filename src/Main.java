@@ -1,3 +1,13 @@
+//8 qmiqwnhwnrckeirepjgv 2 5 5 4 2 1 5 5
+//        2 1 2 4 4 1 5 4
+//        4 4 1 1 1 5 1 4
+//        4 1 4 4 1 4 5 1
+//        1 1 1 5 1 4 4 5
+//        4 4 5 4 5 1 5 5
+//        1 4 4 4 1 1 1 4
+//        4 5 4 5 5 1 4 4
+
+
 import java.util.Random;
 import java.util.Scanner;
 
@@ -9,12 +19,13 @@ public class Main {
         String inp = scn.next();
         int[][] randomMatrix = new int[n][n];
         Random r = new Random();
-//
+
 //        for (int i = 0; i < n; i++){
 //            for (int j = 0; j < n; j++){
 //                randomMatrix[i][j] = r.nextInt(1,6);
 //            }
 //        }
+
 //        int[][] randomMatrix = new int[8][8];
 //        randomMatrix = [[2, 5, 5, 4, 2, 1, 5, 5 ], [2, 1, 2, 4, 4, 1, 5, 4 ], [4, 4, 1, 1 ,1, 5, 1, 4], [4, 1, 4, 4 ,1, 4, 5, 1 ], [1, 1, 1, 5, 1, 4, 4, 5 ], [4, 4 ,5, 4, 5, 1, 5, 5], [1, 4, 4, 4, 1, 1, 1, 4], [4, 5, 4, 5, 5, 1, 4, 4 ]];
 
@@ -76,6 +87,8 @@ public class Main {
 
         String ans = objectsMatrix[n-1][n-1].white(str1, str2, objectsMatrix[n-1][n-1].num);
 
+        System.out.println(str1);
+        System.out.println(str2);
         System.out.print(ans);
     }
 
@@ -85,7 +98,7 @@ public class Main {
                 if (i == 0 && j == 0){
                     continue;
                 }
-                if ((j == n - 1 || i == n - 1) && (i != 0 && j != 0)){
+                if (objectsMatrix[i][j].color == "pink" && i!=0 && j!=0){
                     objectsMatrix[i][j].result = objectsMatrix[i][j].white(objectsMatrix[i - 1][j].result, objectsMatrix[i][j - 1].result, objectsMatrix[i][j].num);
                 }
                 else if (i == 0){
