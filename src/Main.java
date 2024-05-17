@@ -1,24 +1,3 @@
-//8 qmiqwnhwnrckeirepjgv 2 5 5 4 2 1 5 5
-//        2 1 2 4 4 1 5 4
-//        4 4 1 1 1 5 1 4
-//        4 1 4 4 1 4 5 1
-//        1 1 1 5 1 4 4 5
-//        4 4 5 4 5 1 5 5
-//        1 4 4 4 1 1 1 4
-//        4 5 4 5 5 1 4 4
-
-//8 amir 2 5 5 4 2 1 5 5
-//        2 1 2 4 4 1 5 4
-//        4 4 1 1 1 5 1 4
-//        4 1 4 4 1 4 5 1
-//        1 1 1 5 1 4 4 5
-//        4 4 5 4 5 1 5 5
-//        1 4 4 4 1 1 1 4
-//        4 5 4 5 5 1 4 4
-
-//vemehewewjijejzjznenancncryrgrlrljjjpjljldedvdtdtmomimumusdsssosodldcdzdzmdmhmvmzizikizizxzxhxzxzpzptpzpzvzvdvzvzrzrirzrzizimizizvzvkvzvzkzktkzkzqzqwqzqztztotzt
-//ieweweremjvjvjhjdnznznpnlrororvrdjujujijodtdtdndemlmlmpmjslslsjsydcdcdndemzmzmemzizizioizxzxzxrxzpzpzpfpzvzvzvvvzrzrzrqrzizizimizvzvzvovzkzkzkfkzqzqzqcqztztztkt
-
 import java.util.Random;
 import java.util.Scanner;
 
@@ -31,44 +10,37 @@ public class Main {
         int[][] randomMatrix = new int[n][n];
         Random r = new Random();
 
-//        for (int i = 0; i < n; i++){
-//            for (int j = 0; j < n; j++){
-//                randomMatrix[i][j] = r.nextInt(1,6);
-//            }
-//        }
-
-//        int[][] randomMatrix = new int[8][8];
-//        randomMatrix = [[2, 5, 5, 4, 2, 1, 5, 5 ], [2, 1, 2, 4, 4, 1, 5, 4 ], [4, 4, 1, 1 ,1, 5, 1, 4], [4, 1, 4, 4 ,1, 4, 5, 1 ], [1, 1, 1, 5, 1, 4, 4, 5 ], [4, 4 ,5, 4, 5, 1, 5, 5], [1, 4, 4, 4, 1, 1, 1, 4], [4, 5, 4, 5, 5, 1, 4, 4 ]];
-
+        // makes a random matrix of size nxn
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                randomMatrix[i][j] = scn.nextInt();
+                randomMatrix[i][j] = r.nextInt(1, 6);
             }
         }
 
         Node[][] objectsMatrix = new Node[n][n];
 
+        // gives initial values to objects
         for (int i = 0; i < n; i++){
             for (int j = 0; j < n; j++){
 
                 // green
                 if ((i == 0 && j != n-1) || (j == 0 && i != n-1)){
-                    objectsMatrix[i][j] = new Node("black", randomMatrix[i][j], "green", i, j);
+                    objectsMatrix[i][j] = new Node("black", randomMatrix[i][j], "green");
                 }
 
                 // yellow
                 else if ((i == 0 && j == n-1) || (j == 0 && i == n-1)){
-                    objectsMatrix[i][j] = new Node("black", randomMatrix[i][j], "yellow", i, j);
+                    objectsMatrix[i][j] = new Node("black", randomMatrix[i][j], "yellow");
                 }
 
                 // pink
                 else if ((i != 0 && j == n-1) || (j != 0 && i == n-1)){
-                    objectsMatrix[i][j] = new Node("white", randomMatrix[i][j], "pink", i, j);
+                    objectsMatrix[i][j] = new Node("white", randomMatrix[i][j], "pink");
                 }
 
                 // blue
                 else if ((i != 0 && j != n-1) || (j != 0 && i != n-1)){
-                    objectsMatrix[i][j] = new Node("black", randomMatrix[i][j], "blue", i, j);
+                    objectsMatrix[i][j] = new Node("black", randomMatrix[i][j], "blue");
                 }
 
 
@@ -76,36 +48,14 @@ public class Main {
         }
 
         objectsMatrix[0][0].result = objectsMatrix[0][0].black(inp);
-        System.out.println(objectsMatrix[1][n - 1].white("amir", "pegah"));
 
         calculate(objectsMatrix, n);
-        printMatrix(objectsMatrix);
 
         Node[][] transpose = new Node[n][n];
         transpose(transpose, objectsMatrix, n);
         objectsMatrix = transpose;
 
         calculate(objectsMatrix, n);
-
-
-//        for (int j = 0; j < n - 1; j++) {
-//            for (int i = 0; i < n; i++) {
-//                if (i == 0 && j == 0){
-//                    continue;
-//                }
-//                if (objectsMatrix[i][j].color.equals("pink") ){
-//                    objectsMatrix[i][j].result = objectsMatrix[i][j].white(objectsMatrix[i][j - 1].result, objectsMatrix[i - 1][j].result, objectsMatrix[i][j].num);
-//                }
-//                else if (i == 0){
-//                    objectsMatrix[i][j].result = objectsMatrix[i][j].black(objectsMatrix[i][j - 1].result, objectsMatrix[i][j].num);
-//                } else {
-//                    objectsMatrix[i][j].result = objectsMatrix[i][j].black(objectsMatrix[i - 1][j].result, objectsMatrix[i][j].num);
-//                }
-//            }
-//        }
-
-
-        printMatrix(objectsMatrix);
 
         String str1 = objectsMatrix[n-2][n-1].result;
         String str2 = objectsMatrix[n-1][n-2].result;
@@ -114,6 +64,7 @@ public class Main {
         System.out.println(ans);
     }
 
+    // calculates results for all objects
     public static void calculate(Node[][] objectsMatrix, int n){
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n; j++) {
@@ -131,6 +82,7 @@ public class Main {
             }
         }
     }
+    // returns transpose of the objects matrix
     public static Node[][] transpose(Node[][] transpose, Node[][] objectsMatrix, int n){
         for(int i=0;i<n;i++){
             for(int j=0;j<n;j++){
@@ -140,6 +92,7 @@ public class Main {
         return transpose;
     }
 
+    // function used for debugging
     public static void printMatrix(Node[][] objectsMatrix){
         int n = objectsMatrix[0].length;
         for(int i=0;i<n;i++){
@@ -151,48 +104,5 @@ public class Main {
             }
             System.out.println();
         }
-    }
-
-    public static String[][] handler(Node[][] objectsMatrix, Node obj, String str, int i, int j){
-        String newstr;
-        int Matrixlen = objectsMatrix[0].length;
-        String[][] newstrMatrix = new String[Matrixlen][Matrixlen];
-        for (int k = 0; k < Matrixlen; k++){
-            for (int l = 0; l < Matrixlen; l++){
-                if (objectsMatrix[k][l].color == "pink"){
-                    newstrMatrix[k][l] = "";
-                }
-            }
-        }
-        switch (obj.color){
-            case "green":
-                newstr = obj.black(str);
-                newstrMatrix[obj.i][obj.j] = newstr;
-                handler(objectsMatrix, objectsMatrix[obj.i][obj.j + 1], newstr, obj.i, obj.j);
-                handler(objectsMatrix, objectsMatrix[obj.i + 1][obj.j], newstr, obj.i, obj.j);
-                break;
-            case "yellow":
-                newstr = obj.black(str);
-                newstrMatrix[obj.i][obj.j] = newstr;
-                if (obj.i == 0){
-                    handler(objectsMatrix, objectsMatrix[obj.i + 1][obj.j], newstr, obj.i, obj.j);
-                }
-                else
-                    handler(objectsMatrix, objectsMatrix[obj.i][obj.j + 1], newstr, obj.i, obj.j);
-                break;
-            case "blue":
-                newstr = obj.black(str);
-                newstrMatrix[obj.i][obj.j] = newstr;
-                if (i == obj.i){
-                    handler(objectsMatrix, objectsMatrix[obj.i + 1][obj.j], newstr, obj.i, obj.j);
-                }
-                else
-                    handler(objectsMatrix, objectsMatrix[obj.i][obj.j + 1], newstr, obj.i, obj.j);
-                break;
-            case "pink":
-
-                break;
-        }
-        return newstrMatrix;
     }
 }

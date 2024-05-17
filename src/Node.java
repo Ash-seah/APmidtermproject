@@ -2,15 +2,11 @@ public class Node {
     String arrow;
     int num;
     String color;
-    int i;
-    int j;
     String result;
-    public Node(String arrow, int num, String color, int i, int j){
+    public Node(String arrow, int num, String color){
         this.arrow = arrow;
         this.color = color;
         this.num = num;
-        this.i = i;
-        this.j = j;
     }
 
     public String white(String str1, String str2){
@@ -22,32 +18,34 @@ public class Node {
             case 1:
                 for (int m = 0; m < Math.max(len1, len2); m++) {
                     if (m < len1) {
-                        result.append(str1.charAt(m));
+                        output += str1.charAt(m);
                     }
                     if (m < len2) {
-                        result.append(str2.charAt(m));
+                        output += str2.charAt(m);
                     }
                 }
                 break;
             case 2:
-                result.append(str1);
-                result.append(new StringBuilder(str2).reverse());
+                output += str1;
+                for (int k = 0; k < str2.length(); k++) {
+                    output += str2.charAt(len2 - 1 - k);
+                }
                 break;
             case 3:
                 for (int m = 0; m < Math.max(len1, len2); m++) {
                     if (m < len1) {
-                        result.append(str1.charAt(m));
+                        output += str1.charAt(m);
                     }
                     if (m < len2) {
-                        result.append(str2.charAt(len2 - 1 - m));
+                        output += str2.charAt(len2 - 1 - m);
                     }
                 }
                 break;
             case 4:
                 if (len1 % 2 == 0) {
-                    result.append(str1);
+                    output += str1;
                 } else {
-                    result.append(str2);
+                    output += str2;
                 }
                 break;
             case 5:
@@ -56,22 +54,21 @@ public class Node {
                     char char1 = str1.charAt(m);
                     char char2 = str2.charAt(m);
                     int sum = (char1 - 'a' + char2 - 'a') % 26 + 'a';
-                    result.append((char) sum);
+                    output += (char) sum;
                 }
                 if (len1 > len2) {
-                    result.append(str1.substring(len2));
+                    output += str1.substring(len2);
                 }
                 else if (len2 > len1) {
-                    result.append(str2.substring(len1));
+                    output += str2.substring(len1);
                 }
                 break;
         }
-        return result.toString();
+        return output;
     }
 
     public String black(String str){
         String output = "";
-        StringBuilder result = new StringBuilder();
         switch (this.num){
             case 1:
                 for (int m = 0; m < str.length(); m++)
