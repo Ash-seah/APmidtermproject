@@ -13,12 +13,12 @@ public class Node {
         this.j = j;
     }
 
-    public static String white(String str1, String str2, int num){
+    public String white(String str1, String str2){
         String output = "";
         StringBuilder result = new StringBuilder();
         int len1 = str1.length();
         int len2 = str2.length();
-        switch (num){
+        switch (this.num){
             case 1:
                 for (int m = 0; m < Math.max(len1, len2); m++) {
                     if (m < len1) {
@@ -69,14 +69,14 @@ public class Node {
         return result.toString();
     }
 
-    public static String black(String str, int num){
+    public String black(String str){
         String output = "";
         StringBuilder result = new StringBuilder();
-        switch (num){
+        switch (this.num){
             case 1:
                 for (int m = 0; m < str.length(); m++)
                 {
-                    char ch = str.charAt(m);
+                    char ch = str.charAt(str.length() - m - 1);
                     output += ch;
                 }
                 break;
